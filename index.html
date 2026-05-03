@@ -12,9 +12,7 @@
   <h1>📰 Blog Saya</h1>
 </header>
 
-<main id="posts">
-  <p>Loading...</p>
-</main>
+<main id="posts">Loading...</main>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbyba6jtWxz-vWkOSR6l7Tj1p1wQx8cfkiz6HzBbd8BFtSiWj5InCP2MBnBpfW9_I9A/exec";
@@ -41,7 +39,8 @@ fetch(API_URL)
     document.getElementById("posts").innerHTML = html;
   })
   .catch(err => {
-    document.getElementById("posts").innerHTML = "<p>Gagal load data</p>";
+    document.getElementById("posts").innerHTML = "Gagal load data";
+    console.error(err);
   });
 </script>
 
