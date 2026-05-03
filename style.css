@@ -18,15 +18,14 @@ header a {
   font-size: 14px;
 }
 
-h1 {
-  margin: 0;
-  font-size: 20px;
-}
-
 main {
   padding: 16px;
   max-width: 600px;
   margin: auto;
+}
+
+h1 {
+  font-size: 20px;
 }
 
 .card {
@@ -52,19 +51,14 @@ main {
   color: #888;
 }
 
-iframe {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 10px;
+.video-container {
   margin-bottom: 12px;
 }
 
-.video-fallback {
-  background: #f3f4f6;
-  padding: 12px;
+iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
   border-radius: 10px;
-  margin-bottom: 12px;
-  text-align: center;
 }
 
 a {
@@ -74,9 +68,5 @@ a {
 @media (max-width: 600px) {
   body {
     font-size: 14px;
-  }
-
-  .card {
-    padding: 12px;
   }
 }
