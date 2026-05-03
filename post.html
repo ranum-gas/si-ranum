@@ -12,9 +12,7 @@
   <a href="index.html">← Kembali</a>
 </header>
 
-<main id="post-detail">
-  <p>Loading...</p>
-</main>
+<main id="post-detail">Loading...</main>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbyba6jtWxz-vWkOSR6l7Tj1p1wQx8cfkiz6HzBbd8BFtSiWj5InCP2MBnBpfW9_I9A/exec";
@@ -22,74 +20,19 @@ const API_URL = "https://script.google.com/macros/s/AKfycbyba6jtWxz-vWkOSR6l7Tj1
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-<script>
-function getEmbedVideo(url) {
+function renderVideo(url) {
   if (!url) return "";
 
-  // YouTube
-  if (url.includes("youtube.com") || url.includes("youtu.be")) {
-    let videoId = "";
-
-    if (url.includes("watch?v=")) {
-      videoId = url.split("watch?v=")[1];
-    } else if (url.includes("youtu.be/")) {
-      videoId = url.split("youtu.be/")[1];
-    }
-
-    return `
+  return `
+    <div class="video-container">
       <iframe 
-        src="https://www.youtube.com/embed/${videoId}"
+        src="${url}" 
+        allow="autoplay"
+        sandbox="allow-scripts allow-same-origin"
+        referrerpolicy="no-referrer"
         allowfullscreen>
       </iframe>
-    `;
-  }
-
-  // Google Drive
-  if (url.includes("drive.google.com")) {
-    let fileId = "";
-
-    if (url.includes("/file/d/")) {
-      fileId = url.split("/file/d/")[1].split("/")[0];
-    }
-
-    return `
-      <iframe 
-        src="https://drive.google.com/file/d/${fileId}/preview"
-        allow="autoplay">
-      </iframe>
-    `;
-  }
-
-  // Jumpshare fallback
-  if (url.includes("jumpshare.com")) {
-    return `
-      <div class="video-fallback">
-        <p>🎥 Video tersedia:</p>
-        <a href="${url}" target="_blank">Tonton video</a>
-      </div>
-    `;
-  }
-
-  // Default
-  return `
-    <iframe src="${url}"></iframe>
-  `;
-}
-</script>
-
-  // Jumpshare (fallback)
-  if (url.includes("jumpshare.com")) {
-    return `
-      <div class="video-fallback">
-        <p>🎥 Video tersedia:</p>
-        <a href="${url}" target="_blank">Tonton video</a>
-      </div>
-    `;
-  }
-
-  // Default iframe
-  return `
-    <iframe src="${url}" frameborder="0"></iframe>
+    </div>
   `;
 }
 
@@ -99,17 +42,15 @@ fetch(API_URL)
     const post = data.find(p => p.id == id);
 
     if (!post) {
-      document.getElementById("post-detail").innerHTML = "<p>Post tidak ditemukan</p>";
+      document.getElementById("post-detail").innerHTML = "Post tidak ditemukan";
       return;
     }
-
-    const videoHTML = getEmbedVideo(post.video);
 
     document.getElementById("post-detail").innerHTML = `
       <h1>${post.judul}</h1>
       <p class="date">${post.tanggal}</p>
 
-      ${videoHTML}
+      ${renderVideo(post.video_embed)}
 
       <p>${post.isi}</p>
 
@@ -117,7 +58,8 @@ fetch(API_URL)
     `;
   })
   .catch(err => {
-    document.getElementById("post-detail").innerHTML = "<p>Gagal load data</p>";
+    document.getElementById("post-detail").innerHTML = "Gagal load data";
+    console.error(err);
   });
 </script>
 
