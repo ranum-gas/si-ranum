@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Minimal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>📰 Blog Saya</h1>
+</header>
+
+<main id="posts">
+  <p>Loading...</p>
+</main>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbyba6jtWxz-vWkOSR6l7Tj1p1wQx8cfkiz6HzBbd8BFtSiWj5InCP2MBnBpfW9_I9A/exec";
+
+fetch(API_URL)
+  .then(res => res.json())
+  .then(data => {
+    let html = "";
+
+    data.reverse().forEach(post => {
+      html += `
+        <div class="card">
+          <h2>
+            <a href="post.html?id=${post.id}">
+              ${post.judul}
+            </a>
+          </h2>
+          <p class="date">${post.tanggal}</p>
+          <p>${post.isi.substring(0,120)}...</p>
+        </div>
+      `;
+    });
+
+    document.getElementById("posts").innerHTML = html;
+  })
+  .catch(err => {
+    document.getElementById("posts").innerHTML = "<p>Gagal load data</p>";
+  });
+</script>
+
+</body>
+</html>
